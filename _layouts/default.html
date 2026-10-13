@@ -4,12 +4,16 @@
 {% include head.html %}
 </head>
 <body>
+{% if site.coming_soon and page.coming_soon_home %}
+{% include coming-soon.html %}
+{% else %}
 <a class="skip-link" href="#main">Skip to content</a>
 {% include header.html %}
 <main id="main">
 {{ content }}
 </main>
 {% include footer.html %}
+{% endif %}
 <script src="{{ '/assets/js/site.js' | relative_url }}"></script>
 </body>
 </html>

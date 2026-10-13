@@ -31,6 +31,12 @@ contact_url: "https://abada.ai/contact.html"
 process_check_url: "https://abada.ai/process-check.html"
 cadence: "New posts monthly to start, then twice a month."
 
+# Coming-soon switch (same approach as abada.ai)
+#   true  = blog.abada.ai shows a "coming soon" page, and the full blog home is at
+#           blog.abada.ai/preview-blog.html for you and reviewers (unlisted, not private)
+#   false = blog.abada.ai shows the full blog home (set this on launch day)
+coming_soon: true
+
 # Pre-launch switch
 #   true  = the blog is online but asks search engines not to list it
 #   false = normal, public, searchable blog (set this on launch day)

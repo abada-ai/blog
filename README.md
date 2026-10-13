@@ -42,7 +42,12 @@ Each topic is one small file in the `_topics` folder. The menu, topic pages and 
 
 ## Settings
 
-`_config.yml` holds the blog name, description (used by search engines and LinkedIn), the three `intro:` lines under the home page title, author details, LinkedIn link, contact email, `contact_url` (the abada.ai contact form that every "Suggest a topic", "Talk to us" and footer email link opens) and the `preview_mode` switch. Set `preview_mode: false` on launch day so search engines can list the blog.
+`_config.yml` holds the blog name, description (used by search engines and LinkedIn), the three `intro:` lines under the home page title, author details, LinkedIn link, contact email, `contact_url` (the abada.ai contact form that every "Suggest a topic", "Talk to us" and footer email link opens) and two pre-launch switches:
+
+- `coming_soon: true` shows a "coming soon" page at blog.abada.ai, and the full blog home is at blog.abada.ai/preview-blog.html (unlisted, not private). Posts and topic pages work as usual.
+- `preview_mode: true` asks search engines not to list any page.
+
+On launch day set both to `false`. The full blog home then appears at blog.abada.ai.
 
 ## Pictures
 

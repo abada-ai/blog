@@ -1,7 +1,7 @@
 {% assign nav_topics = site.topics | sort: "order" %}
 <header class="site-header">
   <div class="wrap top">
-    <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}, home">
+    <a class="brand" href="{% include home-url.html %}" aria-label="{{ site.title }}, home">
       {% include mark.html size=36 %}
       <span class="wordmark">abada<span>.ai</span></span>
       <span class="brand-sep" aria-hidden="true"></span>
@@ -18,7 +18,7 @@
   </div>
   <nav class="topic-nav" aria-label="Topics">
     <div class="wrap">
-      <a href="{{ '/posts/' | relative_url }}"{% if page.url == '/' or page.url == '/posts/' %} aria-current="page"{% endif %}>All posts</a>
+      <a href="{{ '/posts/' | relative_url }}"{% if page.url == '/' or page.url == '/preview-blog.html' or page.url == '/posts/' %} aria-current="page"{% endif %}>All posts</a>
       {% for t in nav_topics %}<a href="{{ t.url | relative_url }}"{% if page.url == t.url or page.topic == t.slug %} aria-current="page"{% endif %}>{{ t.title }}</a>
       {% endfor %}
     </div>

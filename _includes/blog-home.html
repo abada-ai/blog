@@ -1,0 +1,88 @@
+{% assign latest = site.posts | first %}
+
+<section class="section hero">
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <p class="eyebrow">The blog of abada.ai</p>
+      <h1 class="display">{{ site.title }}</h1>
+      {% if site.intro %}{% for line in site.intro %}<p class="lede{% unless forloop.first %} lede-next{% endunless %}">{{ line }}</p>
+      {% endfor %}{% else %}<p class="lede">{{ site.description }}</p>{% endif %}
+      <div class="btn-row cta-row">
+        <a class="btn btn-green btn-lg" href="{{ site.linkedin_url }}">Follow on LinkedIn</a>
+        <a class="btn btn-ghost btn-lg" href="{{ '/topics/' | relative_url }}">Browse topics</a>
+      </div>
+      <p class="fine">{{ site.cadence }} Prefer a conversation? <a href="{{ site.contact_url }}?about=work&amp;from={{ page.url | absolute_url | cgi_escape }}">Talk to us →</a></p>
+    </div>
+
+    {% if latest %}
+    {% assign latest_topic = nil %}
+    {% if latest.topic %}{% assign latest_topic = site.topics | where: "slug", latest.topic | first %}{% endif %}
+    <article class="feature" aria-labelledby="latest-title">
+      <div class="feature-meta"><span class="accent">Latest post</span><span>{{ latest.date | date: "%B %Y" }}</span></div>
+      <h2 id="latest-title"><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h2>
+      {% if latest.tldr %}
+      <div class="feature-list"><p class="label">TL;DR</p><ul class="dots dots-sm">{% for b in latest.tldr limit: 3 %}<li>{{ b }}</li>{% endfor %}</ul></div>
+      {% elsif latest.takeaways %}
+      <div class="feature-list"><p class="label">Key takeaways</p><ul class="dots dots-sm">{% for b in latest.takeaways limit: 3 %}<li>{{ b }}</li>{% endfor %}</ul></div>
+      {% elsif latest.description %}
+      <p class="feature-desc">{{ latest.description }}</p>
+      {% endif %}
+      <div class="feature-foot">
+        {% if latest_topic %}<span class="chip">{{ latest_topic.title }}{% if latest.format == "roundup" %} · Monthly roundup{% endif %}</span>{% else %}<span></span>{% endif %}
+        <a class="link-arrow" href="{{ latest.url | relative_url }}">Read the post →</a>
+      </div>
+    </article>
+    {% else %}
+    <aside class="feature">
+      <div class="feature-meta"><span class="accent">Coming soon</span></div>
+      <h2>The first post is on its way.</h2>
+      <p class="feature-desc">{{ site.cadence }}</p>
+    </aside>
+    {% endif %}
+  </div>
+</section>
+
+{% if site.posts.size > 1 %}
+<section class="section rule" id="latest">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Recent posts</p>
+        <h2 class="h2-xl">From the archive</h2>
+      </div>
+      <a class="link-arrow" href="{{ '/posts/' | relative_url }}">All posts →</a>
+    </div>
+    <div class="cards">
+      {% for p in site.posts offset: 1 limit: 6 %}{% include post-card.html post=p %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section rule" id="topics">
+  <div class="wrap">
+    <p class="eyebrow">Browse by topic</p>
+    <h2 class="h2-xl narrow">One question behind every topic: what's worth doing now?</h2>
+    {% include topic-grid.html %}
+  </div>
+</section>
+
+<section class="section band" aria-labelledby="format-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">The monthly roundup</p>
+        <h2 id="format-title" class="h2-xl narrow">The AI news that matters, in four parts, every month.</h2>
+      </div>
+      <p class="band-note">OpenAI · Anthropic · Google · Meta</p>
+    </div>
+    <ol class="steps">
+      <li><span class="step-n">01</span><span class="step-title">TL;DR</span><span class="step-desc">The month in three bullets, for when you have one minute.</span></li>
+      <li><span class="step-n">02</span><span class="step-title">What changed in AI</span><span class="step-desc">Each release: what it is, why it matters for business, who should care.</span></li>
+      <li><span class="step-n">03</span><span class="step-title">The agentic angle</span><span class="step-desc">The ROI takeaway: which work just became worth automating.</span></li>
+      <li><span class="step-n">04</span><span class="step-title">Sources</span><span class="step-desc">Every claim linked to its original source.</span></li>
+    </ol>
+  </div>
+</section>
+
+{% include follow-band.html %}

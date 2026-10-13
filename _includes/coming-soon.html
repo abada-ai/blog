@@ -1,0 +1,55 @@
+{% comment %}
+  "Coming soon" page shown at blog.abada.ai while coming_soon: true in _config.yml.
+  The topic list comes from the _topics folder, so it stays in sync automatically.
+{% endcomment %}
+{% assign cs_topics = site.topics | sort: "order" %}
+{% assign here = page.url | absolute_url | cgi_escape %}
+<div class="cs">
+  <header class="cs-header">
+    <div class="wrap cs-top">
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">
+        {% include mark.html size=36 %}
+        <span class="wordmark">abada<span>.ai</span></span>
+        <span class="brand-sep" aria-hidden="true"></span>
+        <span class="brand-label">The Briefing</span>
+      </a>
+      <div class="cs-actions">
+        <a class="btn btn-quiet hide-sm" href="{{ site.home_url }}">abada.ai ↗</a>
+        <a class="cs-mail" href="{{ site.contact_url }}?from={{ here }}" title="Send us a message"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 4.5 L8 8.6 L13.5 4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>{{ site.contact_email }}</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="cs-main">
+    <div class="wrap cs-hero">
+      <div class="cs-copy">
+        <p class="eyebrow">Coming soon</p>
+        <h1 class="display">{{ site.title }}</h1>
+        {% if site.intro %}{% for line in site.intro %}<p class="lede{% unless forloop.first %} lede-next{% endunless %}">{{ line }}</p>
+        {% endfor %}{% else %}<p class="lede">{{ site.description }}</p>{% endif %}
+        <p class="lede lede-next">The first posts are on their way.</p>
+        <div class="btn-row cta-row">
+          <a class="btn btn-green btn-lg" href="{{ site.linkedin_url }}">Follow on LinkedIn</a>
+          <a class="btn btn-ghost btn-lg" href="{{ site.process_check_url }}">Get a free process check</a>
+        </div>
+        <p class="fine">Follow on LinkedIn to see the first post the day it goes live.</p>
+      </div>
+
+      <aside class="cs-panel" aria-label="Topics coming to the briefing">
+        <p class="cs-panel-label">Coming to the briefing</p>
+        <ol>
+          {% for t in cs_topics %}<li><span class="cs-num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span><div><strong>{{ t.title }}</strong>{% if t.description %}<span class="cs-d">{{ t.description }}</span>{% endif %}</div></li>
+          {% endfor %}
+        </ol>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="cs-footer">
+    <div class="wrap cs-foot">
+      <span>© {{ site.time | date: "%Y" }} ABADA.AI</span>
+      <span>Questions? <a href="{{ site.contact_url }}?from={{ here }}">{{ site.contact_email }}</a></span>
+      <span class="foot-meaning">ABADA, from Sanskrit <em>a-bādha</em>: unobstructed.</span>
+    </div>
+  </footer>
+</div>
