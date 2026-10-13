@@ -1,0 +1,100 @@
+---
+layout: default
+---
+{% assign post_topic = nil %}
+{% if page.topic %}{% assign post_topic = site.topics | where: "slug", page.topic | first %}{% endif %}
+{% if page.format == "roundup" %}
+  {% capture rt_text %}{{ content | strip_html }} {{ page.tldr | join: " " }} {% for r in page.releases %}{{ r.name }} {{ r.what }} {{ r.why }} {{ r.who }} {% endfor %}{% for a in page.also %}{{ a.name }} {{ a.note }} {% endfor %}{{ page.agentic_angle.text }}{% endcapture %}
+{% else %}
+  {% capture rt_text %}{{ content | strip_html }} {{ page.takeaways | join: " " }}{% endcapture %}
+{% endif %}
+{% assign rt_words = rt_text | number_of_words %}
+{% assign rt_mins = rt_words | divided_by: 220 | floor | plus: 1 %}
+{% assign share_url = page.url | absolute_url %}
+
+<article class="post">
+  <div class="post-wrap">
+
+    <p class="eyebrow">{% if post_topic %}<a href="{{ post_topic.url | relative_url }}">{{ post_topic.title }}</a>{% endif %}<span class="muted">{% if post_topic %} · {% endif %}{% if page.format == "roundup" %}Monthly roundup · {% endif %}{{ page.date | date: "%B %Y" }}</span></p>
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.description %}<p class="dek">{{ page.description }}</p>{% endif %}
+
+    <div class="byline">
+      <div class="who">
+        <div class="avatar" aria-hidden="true">{{ site.author.initials }}</div>
+        <div>
+          <div class="name">{{ site.author.name }}</div>
+          <div class="role">{{ site.author.role }} · <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time> · {{ rt_mins }} min read</div>
+        </div>
+      </div>
+      <div class="share">
+        <a class="btn btn-ghost btn-sm" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | cgi_escape }}" target="_blank" rel="noopener">Share on LinkedIn</a>
+        <a class="btn btn-ghost btn-sm" href="https://twitter.com/intent/tweet?url={{ share_url | cgi_escape }}&amp;text={{ page.title | cgi_escape }}" target="_blank" rel="noopener">Share on X</a>
+        <button type="button" class="btn btn-ghost btn-sm copy-link" data-url="{{ share_url }}">Copy link</button>
+      </div>
+    </div>
+
+    {% if page.format == "roundup" %}
+      {% include roundup.html %}
+    {% else %}
+      {% if page.takeaways %}
+      <aside class="box" aria-labelledby="kt-title">
+        <h2 id="kt-title" class="label">Key takeaways</h2>
+        <ul class="dots">{% for k in page.takeaways %}<li>{{ k }}</li>{% endfor %}</ul>
+      </aside>
+      {% endif %}
+      <div class="prose">
+        {{ content }}
+      </div>
+      {% include sources.html %}
+    {% endif %}
+
+    <section id="share" class="share-block" aria-labelledby="share-title">
+      <div>
+        <h2 id="share-title">Found this useful? Share it with your network.</h2>
+        <p>Opens LinkedIn with this post attached. Add your own take before you post.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-green" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | cgi_escape }}" target="_blank" rel="noopener">Share on LinkedIn</a>
+        <a class="btn btn-ghost" href="https://twitter.com/intent/tweet?url={{ share_url | cgi_escape }}&amp;text={{ page.title | cgi_escape }}" target="_blank" rel="noopener">Share on X</a>
+        <button type="button" class="btn btn-ghost copy-link" data-url="{{ share_url }}">Copy link</button>
+      </div>
+    </section>
+
+    <div class="author">
+      <div class="avatar avatar-lg" aria-hidden="true">{{ site.author.initials }}</div>
+      <div>
+        <div class="name">{{ site.author.name }}</div>
+        <p>{{ site.author.bio }}</p>
+      </div>
+    </div>
+
+    <section class="follow-card" aria-labelledby="next-title">
+      <h2 id="next-title">Get the next post.</h2>
+      <p>{{ site.cadence }} Each one is shared on LinkedIn the day it goes live.</p>
+      <div class="btn-row">
+        <a class="btn btn-green btn-lg" href="{{ site.linkedin_url }}">Follow on LinkedIn</a>
+        <a class="btn btn-ghost btn-lg" href="{{ site.contact_url }}?about=topic&amp;from={{ page.url | absolute_url | cgi_escape }}">Suggest a topic</a>
+      </div>
+    </section>
+
+    {% assign related = site.posts | where: "topic", page.topic | where_exp: "p", "p.url != page.url" %}
+    {% if related.size == 0 %}{% assign related = site.posts | where_exp: "p", "p.url != page.url" %}{% endif %}
+    {% if related.size > 0 %}
+    <section class="related" aria-labelledby="related-title">
+      <h2 id="related-title" class="label">Keep reading</h2>
+      <div class="related-grid">
+        {% for p in related limit: 2 %}
+        {% assign rel_topic = nil %}
+        {% if p.topic %}{% assign rel_topic = site.topics | where: "slug", p.topic | first %}{% endif %}
+        <a class="card card-sm" href="{{ p.url | relative_url }}">
+          {% if rel_topic %}<span class="label accent">{{ rel_topic.title }}</span>{% endif %}
+          <span class="card-title">{{ p.title }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </div>
+</article>

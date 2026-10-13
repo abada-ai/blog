@@ -1,0 +1,11 @@
+{% assign grid_topics = site.topics | sort: "order" %}
+<div class="topic-grid">
+  {% for t in grid_topics %}
+  <a class="topic" href="{{ t.url | relative_url }}">
+    <span class="topic-head"><span class="topic-title">{{ t.title }}</span><span class="arrow" aria-hidden="true">→</span></span>
+    {% if t.description %}<span class="topic-desc">{{ t.description }}</span>{% endif %}
+    {% if t.labels %}<span class="labels">{% for l in t.labels %}<span>{{ l }}</span>{% endfor %}</span>{% endif %}
+  </a>
+  {% endfor %}
+</div>
+<p class="topic-suggest-line">Have a topic in mind? <a href="{{ site.contact_url }}?about=topic&amp;from={{ page.url | absolute_url | cgi_escape }}">Suggest one at {{ site.contact_email }} →</a></p>

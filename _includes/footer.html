@@ -1,0 +1,16 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-brand">
+      <span class="foot-logo">{% include mark.html size=24 %}<span class="wordmark">abada<span>.ai</span></span></span>
+      <span class="foot-meaning">From Sanskrit <em>a-bādha</em>: unobstructed.</span>
+    </div>
+    <div class="foot-links">
+      <a href="{{ site.home_url }}">abada.ai</a>
+      <a href="{{ '/topics/' | relative_url }}">Topics</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      <a href="{{ site.linkedin_url }}">LinkedIn</a>
+      <a href="{{ site.contact_url }}?from={{ page.url | absolute_url | cgi_escape }}">{{ site.contact_email }}</a>
+    </div>
+    <span>© {{ site.time | date: "%Y" }} ABADA.AI</span>
+  </div>
+</footer>

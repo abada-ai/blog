@@ -1,0 +1,9 @@
+Upload pictures for your posts to this folder (assets/images/posts).
+
+In a post, show a picture with:
+![Short description of the picture](/assets/images/posts/your-picture.png)
+
+Use a 1200 x 630 picture as the post's LinkedIn/X preview with this line in the post's front matter:
+image: /assets/images/posts/your-picture.png
+
+This note isn't published on the blog.

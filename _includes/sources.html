@@ -1,0 +1,11 @@
+{% if page.sources and page.sources.size > 0 %}
+<section id="sources" class="sources{% if include.numbered %} sources-numbered{% endif %}" aria-labelledby="sources-title">
+  {% if include.numbered %}<p class="section-num">{{ include.numbered }}</p>
+  <h2 id="sources-title" class="h2">Sources</h2>{% else %}<h2 id="sources-title" class="label">Sources</h2>{% endif %}
+  <ol>
+    {% for s in page.sources %}<li>{% if s.url %}<a href="{{ s.url }}" rel="noopener">{{ s.title }}</a>{% else %}{{ s.title }}{% endif %}{% if s.publisher or s.date %} <span class="muted">— {{ s.publisher }}{% if s.publisher and s.date %}, {% endif %}{{ s.date }}</span>{% endif %}</li>
+    {% endfor %}
+  </ol>
+  <p class="fine">Spotted an error? <a href="{{ site.contact_url }}?about=correction&amp;from={{ page.url | absolute_url | cgi_escape }}">Let us know</a> and we'll correct it.</p>
+</section>
+{% endif %}

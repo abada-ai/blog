@@ -1,0 +1,73 @@
+{% comment %}
+  The monthly "Latest in AI" roundup. Its sections come from the post's
+  front matter: tldr, releases, also, agentic_angle and sources.
+{% endcomment %}
+<nav class="contents" aria-label="In this post">
+  <p class="label">In this post</p>
+  <ol>
+    {% if page.tldr %}<li><a href="#tldr"><span>01</span>TL;DR</a></li>{% endif %}
+    {% if page.releases %}<li><a href="#changed"><span>02</span>What changed in AI</a></li>{% endif %}
+    {% if page.agentic_angle %}<li><a href="#roi"><span>03</span>The agentic angle</a></li>{% endif %}
+    {% if page.sources %}<li><a href="#sources"><span>04</span>Sources</a></li>{% endif %}
+  </ol>
+</nav>
+
+{% assign intro = content | strip_html | strip %}
+{% if intro != "" %}<div class="prose roundup-intro">{{ content }}</div>{% endif %}
+
+{% if page.tldr %}
+<section id="tldr" class="box box-lg" aria-labelledby="tldr-title">
+  <p class="section-num">01</p>
+  <h2 id="tldr-title" class="h2">TL;DR</h2>
+  <ul class="dots dots-lg">{% for b in page.tldr %}<li>{{ b }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+{% if page.releases %}
+<section id="changed" class="changed" aria-labelledby="changed-title">
+  <p class="section-num">02</p>
+  <h2 id="changed-title" class="h2">What changed in AI</h2>
+  <p class="muted section-intro">The releases that matter this month, sorted by business impact.</p>
+  <div class="releases">
+    {% for r in page.releases %}
+    <article class="release">
+      <div class="release-top">
+        <span class="chip">{{ r.lab }}</span>
+        {% if r.announced %}<span class="meta">{{ r.announced }}</span>{% endif %}
+      </div>
+      <h3>{% if r.url %}<a href="{{ r.url }}" rel="noopener">{{ r.name }}</a>{% else %}{{ r.name }}{% endif %}</h3>
+      <dl>
+        {% if r.what %}<div><dt>What it is</dt><dd>{{ r.what }}</dd></div>{% endif %}
+        {% if r.why %}<div><dt>Why it matters for business</dt><dd>{{ r.why }}</dd></div>{% endif %}
+        {% if r.who %}<div><dt>Who should care</dt><dd>{{ r.who }}</dd></div>{% endif %}
+      </dl>
+    </article>
+    {% endfor %}
+  </div>
+  {% if page.also %}
+  <h3 class="label also-title">Also this month</h3>
+  <ul class="also">
+    {% for a in page.also %}<li><span class="also-lab">{{ a.lab }}</span><span><strong>{{ a.name }}.</strong> {{ a.note }}</span></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if page.agentic_angle %}
+<section id="roi" class="roi" aria-labelledby="roi-title">
+  <p class="section-num">03 · The agentic angle</p>
+  <h2 id="roi-title" class="h2">The ROI takeaway</h2>
+  <p>{{ page.agentic_angle.text }}</p>
+  {% if page.agentic_angle.start_with or page.agentic_angle.effort_saved or page.agentic_angle.payback %}
+  <div class="roi-tiles">
+    {% if page.agentic_angle.start_with %}<div class="roi-tile"><span class="roi-label">Start with</span><span class="roi-value">{{ page.agentic_angle.start_with }}</span></div>{% endif %}
+    {% if page.agentic_angle.effort_saved %}<div class="roi-tile"><span class="roi-label">Effort saved</span><span class="roi-value">{{ page.agentic_angle.effort_saved }}</span></div>{% endif %}
+    {% if page.agentic_angle.payback %}<div class="roi-tile"><span class="roi-label">Payback</span><span class="roi-value">{{ page.agentic_angle.payback }}</span></div>{% endif %}
+  </div>
+  {% endif %}
+  <p class="roi-cta">Have a process you'd like scored? <a href="{{ site.process_check_url }}">Get a free process check →</a></p>
+</section>
+{% endif %}
+
+{% include sources.html numbered="04" %}

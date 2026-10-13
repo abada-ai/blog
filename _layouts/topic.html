@@ -1,0 +1,32 @@
+---
+layout: default
+---
+{% assign topic_posts = site.posts | where: "topic", page.slug %}
+<section class="section page-hero">
+  <div class="wrap">
+    <p class="eyebrow"><a href="{{ '/topics/' | relative_url }}">Topics</a></p>
+    <h1 class="display-sm">{{ page.title }}</h1>
+    {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+    {% if page.labels %}<p class="labels">{% for l in page.labels %}<span>{{ l }}</span>{% endfor %}</p>{% endif %}
+    {% assign topic_intro = content | strip_html | strip %}
+    {% if topic_intro != "" %}<div class="prose topic-intro">{{ content }}</div>{% endif %}
+  </div>
+</section>
+
+<section class="section rule">
+  <div class="wrap">
+    {% if topic_posts.size > 0 %}
+    <div class="cards">
+      {% for p in topic_posts %}{% include post-card.html post=p %}{% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">
+      <h2>No posts here yet.</h2>
+      <p>{{ site.cadence }} Follow on LinkedIn to see the first one in this topic.</p>
+      <a class="btn btn-green btn-lg" href="{{ site.linkedin_url }}">Follow on LinkedIn</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% include follow-band.html %}

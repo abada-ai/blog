@@ -1,0 +1,31 @@
+---
+layout: default
+title: All posts
+permalink: /posts/
+description: "Every post from The ABADA AI Briefing, newest first."
+---
+<section class="section page-hero">
+  <div class="wrap">
+    <p class="eyebrow">The archive</p>
+    <h1 class="display-sm">All posts</h1>
+    <p class="lede">Every post, newest first. {{ site.cadence }}</p>
+  </div>
+</section>
+
+<section class="section rule">
+  <div class="wrap">
+    {% if site.posts.size > 0 %}
+    <div class="cards">
+      {% for p in site.posts %}{% include post-card.html post=p %}{% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">
+      <h2>The first post is on its way.</h2>
+      <p>Follow on LinkedIn to see it the day it goes live.</p>
+      <a class="btn btn-green btn-lg" href="{{ site.linkedin_url }}">Follow on LinkedIn</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% include follow-band.html %}

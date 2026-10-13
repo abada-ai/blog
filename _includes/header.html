@@ -1,0 +1,26 @@
+{% assign nav_topics = site.topics | sort: "order" %}
+<header class="site-header">
+  <div class="wrap top">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}, home">
+      {% include mark.html size=36 %}
+      <span class="wordmark">abada<span>.ai</span></span>
+      <span class="brand-sep" aria-hidden="true"></span>
+      <span class="brand-label">The Briefing</span>
+    </a>
+    <div class="actions">
+      <button type="button" class="btn btn-ghost btn-sm" id="theme-toggle" aria-pressed="false">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor"/></svg>
+        <span id="theme-label">Dark mode</span>
+      </button>
+      <a class="btn btn-quiet hide-sm" href="{{ site.home_url }}">abada.ai ↗</a>
+      <a class="btn btn-green" href="{{ site.linkedin_url }}">Follow on LinkedIn</a>
+    </div>
+  </div>
+  <nav class="topic-nav" aria-label="Topics">
+    <div class="wrap">
+      <a href="{{ '/posts/' | relative_url }}"{% if page.url == '/' or page.url == '/posts/' %} aria-current="page"{% endif %}>All posts</a>
+      {% for t in nav_topics %}<a href="{{ t.url | relative_url }}"{% if page.url == t.url or page.topic == t.slug %} aria-current="page"{% endif %}>{{ t.title }}</a>
+      {% endfor %}
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,9 @@
+{% assign card = include.post %}
+{% assign card_topic = nil %}
+{% if card.topic %}{% assign card_topic = site.topics | where: "slug", card.topic | first %}{% endif %}
+<a class="card" href="{{ card.url | relative_url }}">
+  {% if card_topic %}<span class="chip">{{ card_topic.title }}</span>{% endif %}
+  <h3>{{ card.title }}</h3>
+  {% if card.description %}<p>{{ card.description }}</p>{% endif %}
+  <span class="meta">{{ card.date | date: "%B %Y" }}{% if card.format == "roundup" %} · Monthly roundup{% endif %}</span>
+</a>
